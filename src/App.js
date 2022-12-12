@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Search from "./components/Search";
+import emojis from "./assets/emojis.json";
+import Line from "./components/Line";
 
 function App() {
+  const [search, setSearch] = useState("");
+  const tab = [];
+  for (let i = 0; i < emojis.length; i++) {
+    if (emojis[i].keywords.includes(search)) {
+      if (tab.length < 20) {
+        tab.push(<Line emoji={emojis[i]}></Line>);
+      }
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Search search={search} setSearch={setSearch}></Search>
+      {tab}
     </div>
   );
 }
